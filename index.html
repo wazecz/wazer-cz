@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Wazer.cz — Česká komunita Waze</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            waze: {
+              cyan:   '#00CFFF',
+              blue:   '#1A1F71',
+              navy:   '#0D1240',
+              light:  '#E8F9FF',
+              gray:   '#F4F6F8',
+            }
+          },
+          fontFamily: {
+            sans: ['"Rubik"', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+          },
+        }
+      }
+    }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    html { scroll-behavior: smooth; }
+    .nav-link { transition: color 0.2s; }
+    .card-hover { transition: transform 0.2s, box-shadow 0.2s; }
+    .card-hover:hover { transform: translateY(-4px); box-shadow: 0 12px 32px rgba(0,207,255,0.15); }
+  </style>
+</head>
+<body class="font-sans text-gray-800 bg-white">
+
+  <!-- ===== NAVBAR ===== -->
+  <nav class="fixed top-0 left-0 right-0 z-50 bg-waze-navy/95 backdrop-blur-sm shadow-lg">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 flex items-center justify-between h-16">
+      <a href="#hero" class="flex items-center gap-2">
+        <span class="text-waze-cyan font-extrabold text-xl tracking-tight">Wazer<span class="text-white">.cz</span></span>
+      </a>
+      <!-- Desktop nav -->
+      <ul class="hidden md:flex gap-6 text-sm font-medium text-white/80">
+        <li><a href="#o-nas"      class="nav-link hover:text-waze-cyan">O nás</a></li>
+        <li><a href="#co-delame" class="nav-link hover:text-waze-cyan">Co děláme</a></li>
+        <li><a href="#partneri"  class="nav-link hover:text-waze-cyan">Partneři</a></li>
+        <li><a href="#zapojit"   class="nav-link hover:text-waze-cyan">Zapojit se</a></li>
+        <li><a href="#kontakt"   class="nav-link hover:text-waze-cyan">Kontakt</a></li>
+      </ul>
+      <!-- Mobile menu button -->
+      <button onclick="document.getElementById('mobile-menu').classList.toggle('hidden')"
+              class="md:hidden text-white p-2 rounded focus:outline-none">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+        </svg>
+      </button>
+    </div>
+    <!-- Mobile menu -->
+    <div id="mobile-menu" class="hidden md:hidden bg-waze-navy border-t border-white/10">
+      <ul class="flex flex-col py-2 text-sm font-medium text-white/80">
+        <li><a href="#o-nas"      onclick="document.getElementById('mobile-menu').classList.add('hidden')" class="block px-6 py-3 hover:text-waze-cyan">O nás</a></li>
+        <li><a href="#co-delame" onclick="document.getElementById('mobile-menu').classList.add('hidden')" class="block px-6 py-3 hover:text-waze-cyan">Co děláme</a></li>
+        <li><a href="#partneri"  onclick="document.getElementById('mobile-menu').classList.add('hidden')" class="block px-6 py-3 hover:text-waze-cyan">Partneři</a></li>
+        <li><a href="#zapojit"   onclick="document.getElementById('mobile-menu').classList.add('hidden')" class="block px-6 py-3 hover:text-waze-cyan">Zapojit se</a></li>
+        <li><a href="#kontakt"   onclick="document.getElementById('mobile-menu').classList.add('hidden')" class="block px-6 py-3 hover:text-waze-cyan">Kontakt</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- ===== 1. HERO ===== -->
+  <section id="hero" class="bg-waze-navy pt-16 overflow-hidden relative">
+    <!-- Background decoration -->
+    <div class="absolute inset-0 overflow-hidden pointer-events-none">
+      <div class="absolute -top-32 -right-32 w-96 h-96 rounded-full bg-waze-cyan/10 blur-3xl"></div>
+      <div class="absolute bottom-0 -left-32 w-80 h-80 rounded-full bg-waze-blue/30 blur-3xl"></div>
+    </div>
+
+    <div class="relative max-w-6xl mx-auto px-4 sm:px-6 py-16 grid md:grid-cols-2 gap-10 items-center">
+
+      <!-- Text -->
+      <div>
+        <span class="inline-block bg-waze-cyan/10 border border-waze-cyan/30 text-waze-cyan text-xs font-semibold uppercase tracking-widest px-4 py-1.5 rounded-full mb-6">
+          Dobrovolná komunita
+        </span>
+        <h1 class="text-4xl sm:text-5xl md:text-6xl font-extrabold text-white leading-tight mb-4">
+          Česká komunita<br/>
+          <span class="text-waze-cyan">Waze</span>
+        </h1>
+        <p class="text-white/60 text-lg sm:text-xl mb-3">
+          Jsme dobrovolníci, kteří tvoří a udržují mapy pro Waze v České republice a poskytují českou podporu uživatelům.
+        </p>
+        <p class="text-white/40 text-sm mb-10">
+          Nejsme tvůrci aplikace Waze — ta patří společnosti Waze Mobile (Google).
+        </p>
+
+        <!-- Quick action buttons -->
+        <div class="flex flex-wrap gap-3 mb-8">
+          <button onclick="openModal('uzavirka')" class="bg-waze-cyan hover:bg-cyan-300 text-waze-navy font-bold px-6 py-3 rounded-full transition-colors text-sm cursor-pointer">
+            🚧 Hlásit uzavírku
+          </button>
+          <button onclick="openModal('firma')" class="bg-white/10 hover:bg-white/20 border border-white/20 text-white font-semibold px-6 py-3 rounded-full transition-colors text-sm cursor-pointer">
+            🏢 Přidat firmu
+          </button>
+        </div>
+
+        <!-- Secondary action buttons -->
+        <div class="flex flex-wrap gap-3">
+          <button onclick="openDownloadModal()" class="flex items-center gap-2 bg-white/10 hover:bg-white/20 border border-white/20 text-white font-semibold px-6 py-3 rounded-full transition-colors text-sm cursor-pointer">
+            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+            Stáhnout aplikaci
+          </button>
+          <a href="#zapojit" class="flex items-center gap-2 bg-white/10 hover:bg-white/20 border border-white/20 text-white font-semibold px-6 py-3 rounded-full transition-colors text-sm">
+            ✏️ Uprav mapu
+          </a>
+        </div>
+      </div>
+
+      <!-- Waze character -->
+      <div class="flex justify-center md:justify-end">
+        <img src="images/waze-icon.svg" alt="Waze" class="w-56 sm:w-72 md:w-80 drop-shadow-2xl"/>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ===== 2. O NÁS ===== -->
+  <section id="o-nas" class="py-20 bg-waze-gray">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6">
+      <div class="text-center mb-12">
+        <span class="text-waze-cyan font-semibold text-sm uppercase tracking-widest">O nás</span>
+        <h2 class="text-3xl sm:text-4xl font-extrabold text-waze-navy mt-2">Kdo jsme?</h2>
+      </div>
+      <div class="grid md:grid-cols-2 gap-12 items-center">
+        <div>
+          <p class="text-gray-600 text-lg leading-relaxed mb-5">
+            Jsme <strong class="text-waze-navy">dobrovolná komunita</strong> nadšenců, kteří se starají o mapy Waze v České republice. Opravujeme silnice, doplňujeme nové ulice, hlásíme uzavírky a překládáme Waze do češtiny.
+          </p>
+          <p class="text-gray-600 leading-relaxed mb-5">
+            Waze je navigační aplikace od společnosti <a href="https://www.waze.com" target="_blank" rel="noopener" class="text-waze-cyan font-medium hover:underline">Waze Mobile</a> (vlastněné Googlem od roku 2013). My tuto aplikaci <strong>nevyvíjíme</strong> — jsme nezávislá komunita, která ji vylepšuje zevnitř jako editori map a koordinátoři.
+          </p>
+          <p class="text-gray-600 leading-relaxed">
+            Udržujeme přímý kontakt s centrálou Waze v Izraeli a koordinujeme aktivity s česky mluvícími kolegy ze Slovenska.
+          </p>
+        </div>
+        <div class="grid grid-cols-2 gap-4">
+          <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 text-center card-hover">
+            <div class="text-3xl font-extrabold text-waze-cyan mb-1">800+ tis.</div>
+            <div class="text-sm text-gray-500 font-medium">editací mapy v ČR ročně</div>
+          </div>
+          <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 text-center card-hover">
+            <div class="text-3xl font-extrabold text-waze-cyan mb-1">20</div>
+            <div class="text-sm text-gray-500 font-medium">aktivních LC členů</div>
+          </div>
+          <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 text-center card-hover">
+            <div class="text-3xl font-extrabold text-waze-cyan mb-1">9+</div>
+            <div class="text-sm text-gray-500 font-medium">Partnerských organizací</div>
+          </div>
+          <div class="bg-waze-navy rounded-2xl p-6 shadow-sm text-center card-hover">
+            <div class="text-3xl font-extrabold text-waze-cyan mb-1">100%</div>
+            <div class="text-sm text-white/60 font-medium">Dobrovolníci</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 3. CO DĚLÁME ===== -->
+  <section id="co-delame" class="py-20 bg-white">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6">
+      <div class="text-center mb-14">
+        <span class="text-waze-cyan font-semibold text-sm uppercase tracking-widest">Naše aktivity</span>
+        <h2 class="text-3xl sm:text-4xl font-extrabold text-waze-navy mt-2">Co děláme</h2>
+      </div>
+      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <!-- Card 1 -->
+        <div class="bg-waze-gray rounded-2xl p-7 card-hover border border-gray-100">
+          <div class="w-12 h-12 rounded-xl bg-waze-cyan/15 flex items-center justify-center mb-5">
+            <svg class="w-6 h-6 text-waze-cyan" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"/>
+            </svg>
+          </div>
+          <h3 class="text-waze-navy font-bold text-lg mb-2">Tvorba map</h3>
+          <p class="text-gray-500 text-sm leading-relaxed">Editujeme a udržujeme silniční síť České republiky — nové silnice, opravy chyb, rychlostní limity.</p>
+        </div>
+        <!-- Card 2 -->
+        <div class="bg-waze-gray rounded-2xl p-7 card-hover border border-gray-100">
+          <div class="w-12 h-12 rounded-xl bg-waze-cyan/15 flex items-center justify-center mb-5">
+            <svg class="w-6 h-6 text-waze-cyan" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
+            </svg>
+          </div>
+          <h3 class="text-waze-navy font-bold text-lg mb-2">Hlášení uzavírek</h3>
+          <p class="text-gray-500 text-sm leading-relaxed">Zpracováváme hlášení o uzavírkách od řidičů i partnerů a promítáme je do map v reálném čase.</p>
+        </div>
+        <!-- Card 3 -->
+        <div class="bg-waze-gray rounded-2xl p-7 card-hover border border-gray-100">
+          <div class="w-12 h-12 rounded-xl bg-waze-cyan/15 flex items-center justify-center mb-5">
+            <svg class="w-6 h-6 text-waze-cyan" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l.586-.586z"/>
+            </svg>
+          </div>
+          <h3 class="text-waze-navy font-bold text-lg mb-2">Podpora uživatelů</h3>
+          <p class="text-gray-500 text-sm leading-relaxed">Odpovídáme na dotazy v česko-slovenském fóru a pomáháme řidičům s Waze v jejich jazyce.</p>
+        </div>
+        <!-- Card 4 -->
+        <div class="bg-waze-gray rounded-2xl p-7 card-hover border border-gray-100">
+          <div class="w-12 h-12 rounded-xl bg-waze-cyan/15 flex items-center justify-center mb-5">
+            <svg class="w-6 h-6 text-waze-cyan" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129"/>
+            </svg>
+          </div>
+          <h3 class="text-waze-navy font-bold text-lg mb-2">Překlady</h3>
+          <p class="text-gray-500 text-sm leading-relaxed">Překládáme rozhraní Waze a wiki dokumentaci do češtiny, aby bylo vše dostupné v mateřském jazyce.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 4. ZAPOJIT SE ===== -->
+  <section id="zapojit" class="py-20 bg-waze-gray">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6">
+      <div class="text-center mb-14">
+        <span class="text-waze-cyan font-semibold text-sm uppercase tracking-widest">Komunita</span>
+        <h2 class="text-3xl sm:text-4xl font-extrabold text-waze-navy mt-2">Zapojit se</h2>
+        <p class="text-gray-500 mt-3 max-w-xl mx-auto">Chcete přispět k lepší navigaci v Česku? Tady je jak.</p>
+      </div>
+      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+        <a href="https://www.waze.com/cs/editor" target="_blank" rel="noopener"
+           class="group bg-white rounded-2xl p-7 card-hover border border-gray-100 flex flex-col">
+          <div class="w-12 h-12 rounded-xl bg-waze-cyan/15 flex items-center justify-center mb-5">
+            <svg class="w-6 h-6 text-waze-cyan" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
+            </svg>
+          </div>
+          <h3 class="text-waze-navy font-bold text-lg mb-2 group-hover:text-waze-cyan transition-colors">Editor map</h3>
+          <p class="text-gray-500 text-sm leading-relaxed flex-1">Opravujte silnice, přidávejte nové ulice a vylepšujte mapy přímo ve Waze Map Editoru.</p>
+          <span class="mt-4 text-waze-cyan text-sm font-semibold">Otevřít editor →</span>
+        </a>
+        <a href="https://wazeopedia.waze.com/wiki/Czech/Školení" target="_blank" rel="noopener"
+           class="group bg-white rounded-2xl p-7 card-hover border border-gray-100 flex flex-col">
+          <div class="w-12 h-12 rounded-xl bg-waze-cyan/15 flex items-center justify-center mb-5">
+            <svg class="w-6 h-6 text-waze-cyan" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
+            </svg>
+          </div>
+          <h3 class="text-waze-navy font-bold text-lg mb-2 group-hover:text-waze-cyan transition-colors">Školení editorů</h3>
+          <p class="text-gray-500 text-sm leading-relaxed flex-1">Naučte se základy editace map v češtině — od silnic po místa zájmů.</p>
+          <span class="mt-4 text-waze-cyan text-sm font-semibold">Začít školení →</span>
+        </a>
+        <a href="https://www.waze.com/forum/viewforum.php?f=22" target="_blank" rel="noopener"
+           class="group bg-white rounded-2xl p-7 card-hover border border-gray-100 flex flex-col">
+          <div class="w-12 h-12 rounded-xl bg-waze-cyan/15 flex items-center justify-center mb-5">
+            <svg class="w-6 h-6 text-waze-cyan" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/>
+            </svg>
+          </div>
+          <h3 class="text-waze-navy font-bold text-lg mb-2 group-hover:text-waze-cyan transition-colors">CS/SK Fórum</h3>
+          <p class="text-gray-500 text-sm leading-relaxed flex-1">Diskutujte s ostatními editory, ptejte se a sdílejte tipy v česko-slovenské komunitě.</p>
+          <span class="mt-4 text-waze-cyan text-sm font-semibold">Jít na fórum →</span>
+        </a>
+      </div>
+
+      <!-- Donation -->
+      <div class="bg-waze-navy rounded-2xl p-8 flex flex-col sm:flex-row items-center justify-between gap-6">
+        <div>
+          <h3 class="text-white font-bold text-xl mb-2">Podpořte nás</h3>
+          <p class="text-white/50 text-sm max-w-md">Naše komunita funguje čistě dobrovolnicky. Pokud chcete podpořit provoz webu a aktivity, přijmeme každou korunou. Transparentní účet Fio banky.</p>
+        </div>
+        <a href="https://ib.fio.cz/ib/transparent?a=2900907010" target="_blank" rel="noopener"
+           class="flex-shrink-0 bg-waze-cyan hover:bg-cyan-300 text-waze-navy font-bold px-7 py-3 rounded-full transition-colors whitespace-nowrap">
+          ❤️ Přispět
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 5. PARTNEŘI ===== -->
+  <section id="partneri" class="py-20 bg-white">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6">
+      <div class="text-center mb-14">
+        <span class="text-waze-cyan font-semibold text-sm uppercase tracking-widest">Spolupráce</span>
+        <h2 class="text-3xl sm:text-4xl font-extrabold text-waze-navy mt-2">Partneři</h2>
+        <p class="text-gray-500 mt-3 max-w-xl mx-auto">Spolupracujeme s organizacemi, které sdílejí dopravní data a zlepšují Waze pro české řidiče.</p>
+      </div>
+      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        <!-- Partner cards: logo (optional) + name + description -->
+        <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 card-hover flex flex-col gap-3">
+          <div class="h-12 flex items-center">
+            <!-- logo: <img src="logos/radio-impuls.png" alt="Radio Impuls" class="max-h-10 max-w-[140px] object-contain"> -->
+            <span class="text-xs text-gray-300 italic">logo</span>
+          </div>
+          <h3 class="font-bold text-waze-navy">Radio Impuls</h3>
+          <p class="text-gray-500 text-sm">Integruje hlášení Waze do dopravní rubriky „Doprava 007".</p>
+        </div>
+        <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 card-hover flex flex-col gap-3">
+          <div class="h-12 flex items-center">
+            <!-- logo: <img src="logos/brno.png" alt="Město Brno" class="max-h-10 max-w-[140px] object-contain"> -->
+            <span class="text-xs text-gray-300 italic">logo</span>
+          </div>
+          <h3 class="font-bold text-waze-navy">Město Brno</h3>
+          <p class="text-gray-500 text-sm">První česká obec v programu Connected Citizens — sdílí data o uzavírkách.</p>
+        </div>
+        <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 card-hover flex flex-col gap-3">
+          <div class="h-12 flex items-center">
+            <!-- logo: <img src="logos/runczech.png" alt="RunCzech" class="max-h-10 max-w-[140px] object-contain"> -->
+            <span class="text-xs text-gray-300 italic">logo</span>
+          </div>
+          <h3 class="font-bold text-waze-navy">RunCzech</h3>
+          <p class="text-gray-500 text-sm">Sdílí data o uzavírkách při běžeckých závodech, aby řidiči mohli objíždět trasy.</p>
+        </div>
+        <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 card-hover flex flex-col gap-3">
+          <div class="h-12 flex items-center">
+            <!-- logo: <img src="logos/jsdi.png" alt="JSDI" class="max-h-10 max-w-[140px] object-contain"> -->
+            <span class="text-xs text-gray-300 italic">logo</span>
+          </div>
+          <h3 class="font-bold text-waze-navy">JSDI</h3>
+          <p class="text-gray-500 text-sm">Výměna dat o dopravních uzavírkách přes jednotný dopravní informační systém.</p>
+        </div>
+        <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 card-hover flex flex-col gap-3">
+          <div class="h-12 flex items-center">
+            <!-- logo: <img src="logos/rsd.png" alt="ŘSD" class="max-h-10 max-w-[140px] object-contain"> -->
+            <span class="text-xs text-gray-300 italic">logo</span>
+          </div>
+          <h3 class="font-bold text-waze-navy">ŘSD</h3>
+          <p class="text-gray-500 text-sm">Ředitelství silnic a dálnic poskytuje mapová data a podporuje Waze Beacons.</p>
+        </div>
+        <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 card-hover flex flex-col gap-3">
+          <div class="h-12 flex items-center">
+            <!-- logo: <img src="logos/cuzk.png" alt="ČÚZK" class="max-h-10 max-w-[140px] object-contain"> -->
+            <span class="text-xs text-gray-300 italic">logo</span>
+          </div>
+          <h3 class="font-bold text-waze-navy">ČÚZK</h3>
+          <p class="text-gray-500 text-sm">Poskytuje kartografické podklady pro tvorbu a aktualizaci map.</p>
+        </div>
+        <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 card-hover flex flex-col gap-3">
+          <div class="h-12 flex items-center">
+            <!-- logo: <img src="logos/pretol.png" alt="Pretol" class="max-h-10 max-w-[140px] object-contain"> -->
+            <span class="text-xs text-gray-300 italic">logo</span>
+          </div>
+          <h3 class="font-bold text-waze-navy">Pretol</h3>
+          <p class="text-gray-500 text-sm">Odtahová služba sdílí aktuální informace o nehodách a zácpách na dálnicích.</p>
+        </div>
+        <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 card-hover flex flex-col gap-3">
+          <div class="h-12 flex items-center">
+            <!-- logo: <img src="logos/petra-biache.png" alt="Petra Biache" class="max-h-10 max-w-[140px] object-contain"> -->
+            <span class="text-xs text-gray-300 italic">logo</span>
+          </div>
+          <h3 class="font-bold text-waze-navy">Petra Biache</h3>
+          <p class="text-gray-500 text-sm">Hlasová profesionálka — hlas české verze klasické navigace Waze.</p>
+        </div>
+        <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 card-hover flex flex-col gap-3">
+          <div class="h-12 flex items-center">
+            <!-- logo: <img src="logos/waze-sk.png" alt="Waze Slovensko" class="max-h-10 max-w-[140px] object-contain"> -->
+            <span class="text-xs text-gray-300 italic">logo</span>
+          </div>
+          <h3 class="font-bold text-waze-navy">Waze Slovensko</h3>
+          <p class="text-gray-500 text-sm">Slovenská sesterská komunita — pravidelná spolupráce a sdílení zkušeností.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 6. KONTAKT + TÝM ===== -->
+  <section id="kontakt" class="py-20 bg-waze-gray">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6">
+      <div class="text-center mb-14">
+        <span class="text-waze-cyan font-semibold text-sm uppercase tracking-widest">Kontakt</span>
+        <h2 class="text-3xl sm:text-4xl font-extrabold text-waze-navy mt-2">Kontakt</h2>
+      </div>
+
+      <div class="max-w-3xl mx-auto grid md:grid-cols-2 gap-6">
+
+        <!-- Left column: association + email -->
+        <div class="flex flex-col gap-4">
+          <!-- Association button -->
+          <button onclick="openSpolekModal()"
+                  class="flex items-center gap-4 bg-white rounded-2xl p-5 border border-gray-100 card-hover group w-full text-left cursor-pointer">
+            <div class="w-12 h-12 rounded-full bg-waze-cyan/15 flex items-center justify-center flex-shrink-0">
+              <svg class="w-5 h-5 text-waze-cyan" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/>
+              </svg>
+            </div>
+            <div class="flex-1">
+              <div class="font-bold text-waze-navy group-hover:text-waze-cyan transition-colors">Informace o spolku</div>
+              <div class="text-gray-400 text-sm">Výbor, název, IČO, sídlo, účet</div>
+            </div>
+            <svg class="w-4 h-4 text-gray-300 group-hover:text-waze-cyan transition-colors flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+            </svg>
+          </button>
+
+          <!-- Email -->
+          <a href="mailto:info@wazer.cz"
+             class="flex items-center gap-4 bg-white rounded-2xl p-5 border border-gray-100 card-hover group">
+            <div class="w-12 h-12 rounded-full bg-waze-cyan/15 flex items-center justify-center flex-shrink-0">
+              <svg class="w-5 h-5 text-waze-cyan" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+              </svg>
+            </div>
+            <div class="flex-1">
+              <div class="text-gray-400 text-xs uppercase tracking-wide mb-0.5">Email</div>
+              <div class="font-semibold text-waze-navy group-hover:text-waze-cyan transition-colors">info@wazer.cz</div>
+            </div>
+          </a>
+        </div>
+
+        <!-- Right column: socials -->
+        <div class="flex flex-col gap-4">
+          <!-- Facebook page -->
+          <a href="https://www.facebook.com/WazeCZ" target="_blank" rel="noopener"
+             class="flex items-center gap-4 bg-white rounded-2xl p-5 border border-gray-100 card-hover group">
+            <div class="w-12 h-12 rounded-full bg-[#1877F2]/10 flex items-center justify-center flex-shrink-0">
+              <svg class="w-5 h-5 text-[#1877F2]" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+            </div>
+            <div class="flex-1">
+              <div class="text-gray-400 text-xs uppercase tracking-wide mb-0.5">Facebook</div>
+              <div class="font-semibold text-waze-navy group-hover:text-waze-cyan transition-colors">Stránka WazeCZ</div>
+            </div>
+            <svg class="w-4 h-4 text-gray-300 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+            </svg>
+          </a>
+
+          <!-- Facebook group -->
+          <a href="https://www.facebook.com/groups/629403580825410" target="_blank" rel="noopener"
+             class="flex items-center gap-4 bg-white rounded-2xl p-5 border border-gray-100 card-hover group">
+            <div class="w-12 h-12 rounded-full bg-[#1877F2]/10 flex items-center justify-center flex-shrink-0">
+              <svg class="w-5 h-5 text-[#1877F2]" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+            </div>
+            <div class="flex-1">
+              <div class="text-gray-400 text-xs uppercase tracking-wide mb-0.5">Facebook</div>
+              <div class="font-semibold text-waze-navy group-hover:text-waze-cyan transition-colors">Komunita (skupina)</div>
+            </div>
+            <svg class="w-4 h-4 text-gray-300 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+            </svg>
+          </a>
+
+          <!-- Discord -->
+          <a href="https://discord.gg/cUaGjJY" target="_blank" rel="noopener"
+             class="flex items-center gap-4 bg-white rounded-2xl p-5 border border-gray-100 card-hover group">
+            <div class="w-12 h-12 rounded-full bg-[#5865F2]/10 flex items-center justify-center flex-shrink-0">
+              <svg class="w-5 h-5 text-[#5865F2]" fill="currentColor" viewBox="0 0 24 24"><path d="M20.317 4.492c-1.53-.69-3.17-1.2-4.885-1.49a.075.075 0 00-.079.036c-.21.369-.444.85-.608 1.23a18.566 18.566 0 00-5.487 0 12.36 12.36 0 00-.617-1.23A.077.077 0 008.562 3c-1.714.29-3.354.8-4.885 1.491a.07.07 0 00-.032.027C.533 9.093-.32 13.555.099 17.961a.08.08 0 00.031.055 20.03 20.03 0 005.993 2.98.078.078 0 00.084-.026c.462-.62.874-1.275 1.226-1.963.021-.04.001-.088-.041-.104a13.201 13.201 0 01-1.872-.878.075.075 0 01-.008-.125c.126-.093.252-.19.372-.287a.075.075 0 01.078-.01c3.927 1.764 8.18 1.764 12.061 0a.075.075 0 01.079.009c.12.098.245.195.372.288a.075.075 0 01-.006.125c-.598.344-1.22.635-1.873.877a.075.075 0 00-.041.105c.36.687.772 1.341 1.225 1.962a.077.077 0 00.084.028 19.963 19.963 0 006.002-2.981.076.076 0 00.032-.054c.5-5.094-.838-9.52-3.549-13.442a.06.06 0 00-.031-.028zM8.02 15.278c-1.182 0-2.157-1.069-2.157-2.38 0-1.312.956-2.38 2.157-2.38 1.21 0 2.176 1.077 2.157 2.38 0 1.312-.956 2.38-2.157 2.38zm7.975 0c-1.183 0-2.157-1.069-2.157-2.38 0-1.312.955-2.38 2.157-2.38 1.21 0 2.176 1.077 2.157 2.38 0 1.312-.946 2.38-2.157 2.38z"/></svg>
+            </div>
+            <div class="flex-1">
+              <div class="text-gray-400 text-xs uppercase tracking-wide mb-0.5">Discord</div>
+              <div class="font-semibold text-waze-navy group-hover:text-waze-cyan transition-colors">Přidejte se na Discord</div>
+            </div>
+            <svg class="w-4 h-4 text-gray-300 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+            </svg>
+          </a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="bg-waze-navy py-8">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <span class="text-white/30 text-sm">
+        © <script>document.write(new Date().getFullYear())</script> Wazer.cz — dobrovolná komunita Waze ČR
+      </span>
+      <div class="flex gap-5 text-sm text-white/30">
+        <span>Nejsme Waze ani Google.</span>
+        <a href="http://www.waze.com" target="_blank" rel="noopener" class="hover:text-waze-cyan transition-colors">Waze.com</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ===== SPOLEK MODAL ===== -->
+  <div id="spolek-modal" class="hidden fixed inset-0 z-[100] flex items-center justify-center p-4">
+    <div class="absolute inset-0 bg-black/70 backdrop-blur-sm" onclick="closeSpolekModal()"></div>
+    <div class="relative bg-white rounded-3xl shadow-2xl w-full max-w-lg max-h-[90vh] overflow-y-auto">
+      <!-- Header -->
+      <div class="flex items-center justify-between px-7 pt-7 pb-4 sticky top-0 bg-white border-b border-gray-100 rounded-t-3xl">
+        <h2 class="text-waze-navy font-extrabold text-xl">Náš tým & spolek</h2>
+        <button onclick="closeSpolekModal()" class="text-gray-400 hover:text-gray-600 transition-colors p-1">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+          </svg>
+        </button>
+      </div>
+      <div class="px-7 py-6">
+        <!-- Výbor -->
+        <h3 class="text-xs text-gray-400 uppercase tracking-widest mb-4">Výbor</h3>
+        <div class="space-y-3 mb-8">
+          <div class="flex items-center gap-4 bg-waze-gray rounded-2xl p-4">
+            <div class="w-10 h-10 rounded-full bg-waze-cyan/15 flex items-center justify-center font-extrabold text-waze-cyan text-base flex-shrink-0">P</div>
+            <div><div class="font-semibold text-waze-navy">GinBook</div><div class="text-gray-400 text-xs">Patrik Ingr</div></div>
+          </div>
+          <div class="flex items-center gap-4 bg-waze-gray rounded-2xl p-4">
+            <div class="w-10 h-10 rounded-full bg-waze-cyan/15 flex items-center justify-center font-extrabold text-waze-cyan text-base flex-shrink-0">V</div>
+            <div><div class="font-semibold text-waze-navy">vitj</div><div class="text-gray-400 text-xs">Vít Jelínek</div></div>
+          </div>
+          <div class="flex items-center gap-4 bg-waze-gray rounded-2xl p-4">
+            <div class="w-10 h-10 rounded-full bg-waze-cyan/15 flex items-center justify-center font-extrabold text-waze-cyan text-base flex-shrink-0">M</div>
+            <div><div class="font-semibold text-waze-navy">MajkiiTelini</div><div class="text-gray-400 text-xs">Michal Telenský</div></div>
+          </div>
+          <div class="flex items-center gap-4 bg-waze-gray rounded-2xl p-4">
+            <div class="w-10 h-10 rounded-full bg-waze-cyan/15 flex items-center justify-center font-extrabold text-waze-cyan text-base flex-shrink-0">M</div>
+            <div><div class="font-semibold text-waze-navy">masvbr</div><div class="text-gray-400 text-xs">Martin Svoboda</div></div>
+          </div>
+          <div class="flex items-center gap-4 bg-waze-gray rounded-2xl p-4">
+            <div class="w-10 h-10 rounded-full bg-waze-cyan/15 flex items-center justify-center font-extrabold text-waze-cyan text-base flex-shrink-0">M</div>
+            <div><div class="font-semibold text-waze-navy">martinkolar</div><div class="text-gray-400 text-xs">Martin Kolář</div></div>
+          </div>
+        </div>
+        <!-- Informace o spolku -->
+        <h3 class="text-xs text-gray-400 uppercase tracking-widest mb-4">Informace o spolku</h3>
+        <div class="grid grid-cols-2 gap-4">
+          <div class="bg-waze-gray rounded-2xl p-4">
+            <div class="text-xs text-gray-400 uppercase tracking-widest mb-1">Název</div>
+            <div class="font-semibold text-waze-navy text-sm">Název spolku, z.s.</div>
+          </div>
+          <div class="bg-waze-gray rounded-2xl p-4">
+            <div class="text-xs text-gray-400 uppercase tracking-widest mb-1">IČO</div>
+            <div class="font-semibold text-waze-navy text-sm">00000000</div>
+          </div>
+          <div class="bg-waze-gray rounded-2xl p-4">
+            <div class="text-xs text-gray-400 uppercase tracking-widest mb-1">Sídlo</div>
+            <div class="font-semibold text-waze-navy text-sm">Ulice 1, 000 00 Město</div>
+          </div>
+          <div class="bg-waze-gray rounded-2xl p-4">
+            <div class="text-xs text-gray-400 uppercase tracking-widest mb-1">Bankovní účet</div>
+            <div class="font-semibold text-waze-navy text-sm">0000000000 / 0000</div>
+          </div>
+        </div>
+        <!-- Donate -->
+        <div class="mt-6 bg-waze-navy rounded-2xl p-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+          <div>
+            <div class="text-white font-bold mb-1">❤️ Podpořte nás</div>
+            <p class="text-white/50 text-sm">Naše komunita funguje čistě dobrovolnicky. Přijmeme každou korunu — transparentní účet Fio banky.</p>
+          </div>
+          <a href="https://ib.fio.cz/ib/transparent?a=2900907010" target="_blank" rel="noopener"
+             class="flex-shrink-0 bg-waze-cyan hover:bg-cyan-300 text-waze-navy font-bold px-6 py-2.5 rounded-full transition-colors text-sm whitespace-nowrap">
+            Přispět
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== DOWNLOAD MODAL ===== -->
+  <div id="download-modal" class="hidden fixed inset-0 z-[100] flex items-center justify-center p-4">
+    <div class="absolute inset-0 bg-black/70 backdrop-blur-sm" onclick="closeDownloadModal()"></div>
+    <div class="relative bg-waze-navy border border-white/10 rounded-3xl shadow-2xl w-full max-w-sm p-8">
+      <button onclick="closeDownloadModal()" class="absolute top-4 right-4 text-white/40 hover:text-white transition-colors">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+        </svg>
+      </button>
+      <h2 class="text-white font-extrabold text-xl mb-2">📱 Stáhnout Waze</h2>
+      <p class="text-white/50 text-sm mb-6">Vyberte svou platformu</p>
+      <div class="flex flex-col gap-3">
+        <a href="https://play.google.com/store/apps/details?id=com.waze" target="_blank" rel="noopener"
+           class="flex items-center gap-4 bg-white/5 hover:bg-white/10 border border-white/10 rounded-2xl px-5 py-4 transition-colors">
+          <div class="w-10 h-10 rounded-xl bg-waze-cyan/20 flex items-center justify-center flex-shrink-0">
+            <svg class="w-5 h-5 text-waze-cyan" fill="currentColor" viewBox="0 0 24 24"><path d="M3.18 23.76A2 2 0 0 1 2 22V2A2 2 0 0 1 3.18.24l11.31 11.31L3.18 23.76zm3.13-14.87L4.44 7.01l9.01 5.06-3.07 1.73-4.07-4.91zm0 6.22l4.07-4.91 3.07 1.73-9.01 5.06 1.87-1.88zm9.36-3.11L9.75 8.94l1.87-1.06 5.93 3.43-1.88 1.69zM15.69 14l-5.93 3.43-1.87-1.06 5.92-3.06L15.69 14z"/></svg>
+          </div>
+          <div>
+            <div class="text-waze-cyan font-semibold text-sm">Google Play</div>
+            <div class="text-white/40 text-xs">Android</div>
+          </div>
+          <svg class="w-4 h-4 text-waze-cyan/40 ml-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+          </svg>
+        </a>
+        <a href="https://itunes.apple.com/cz/app/waze-social-gps-traffic/id323229106" target="_blank" rel="noopener"
+           class="flex items-center gap-4 bg-white/5 hover:bg-white/10 border border-white/10 rounded-2xl px-5 py-4 transition-colors">
+          <div class="w-10 h-10 rounded-xl bg-waze-cyan/20 flex items-center justify-center flex-shrink-0">
+            <svg class="w-5 h-5 text-waze-cyan" fill="currentColor" viewBox="0 0 24 24"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+          </div>
+          <div>
+            <div class="text-waze-cyan font-semibold text-sm">App Store</div>
+            <div class="text-white/40 text-xs">iPhone / iPad</div>
+          </div>
+          <svg class="w-4 h-4 text-waze-cyan/40 ml-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== MODAL ===== -->
+  <div id="action-modal" class="hidden fixed inset-0 z-[100] flex items-center justify-center p-4">
+    <!-- Backdrop -->
+    <div class="absolute inset-0 bg-black/60 backdrop-blur-sm" onclick="closeModal()"></div>
+
+    <!-- Modal box -->
+    <div id="modal-box" class="relative bg-waze-navy border border-white/10 rounded-3xl w-full max-w-lg shadow-2xl overflow-hidden transition-all duration-300">
+      <!-- Header -->
+      <div class="flex items-center justify-between px-7 pt-7 pb-4">
+        <h2 id="modal-title" class="text-white font-extrabold text-xl"></h2>
+        <button onclick="closeModal()" class="text-white/40 hover:text-white transition-colors p-1">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Choice step -->
+      <div id="modal-choices" class="px-7 pb-7">
+        <p class="text-white/60 text-sm mb-4">
+          <a onclick="closeModal(); document.getElementById('zapojit').scrollIntoView({behavior:'smooth'});"
+             class="text-waze-cyan underline underline-offset-2 cursor-pointer hover:text-cyan-300 transition-colors">Úprava mapy</a>
+          je jednoduchá. Máme ale spoustu pravidel — pokud se na to necítíš, dej nám raději vědět na jednom z odkazů níže.
+        </p>
+        <p class="text-white/40 text-xs mb-5">Jak nás chcete kontaktovat?</p>
+        <div class="flex flex-col gap-3">
+          <!-- Facebook -->
+          <a id="modal-facebook-link" href="#" target="_blank" rel="noopener"
+             class="flex items-center gap-4 bg-white/5 hover:bg-white/10 border border-white/10 rounded-2xl px-5 py-4 transition-colors group">
+            <div class="w-10 h-10 rounded-xl bg-[#1877F2]/20 flex items-center justify-center flex-shrink-0">
+              <svg class="w-5 h-5 text-[#1877F2]" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+              </svg>
+            </div>
+            <div>
+              <div class="text-white font-semibold text-sm group-hover:text-waze-cyan transition-colors">Napsat na Facebooku</div>
+              <div class="text-white/40 text-xs">Přejít na naši Facebook stránku</div>
+            </div>
+            <svg class="w-4 h-4 text-white/20 ml-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+            </svg>
+          </a>
+
+          <!-- Discord -->
+          <a id="modal-discord-link" href="#" target="_blank" rel="noopener"
+             class="flex items-center gap-4 bg-white/5 hover:bg-white/10 border border-white/10 rounded-2xl px-5 py-4 transition-colors group">
+            <div class="w-10 h-10 rounded-xl bg-[#5865F2]/20 flex items-center justify-center flex-shrink-0">
+              <svg class="w-5 h-5 text-[#5865F2]" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057c.003.022.015.04.032.052a19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/>
+              </svg>
+            </div>
+            <div>
+              <div class="text-white font-semibold text-sm group-hover:text-waze-cyan transition-colors">Napsat na Discordu</div>
+              <div class="text-white/40 text-xs">Připojit se k naší Discord komunitě</div>
+            </div>
+            <svg class="w-4 h-4 text-white/20 ml-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+            </svg>
+          </a>
+
+          <!-- Form -->
+          <button onclick="showForm()" class="flex items-center gap-4 bg-waze-cyan/10 hover:bg-waze-cyan/20 border border-waze-cyan/20 rounded-2xl px-5 py-4 transition-colors group text-left w-full">
+            <div class="w-10 h-10 rounded-xl bg-waze-cyan/20 flex items-center justify-center flex-shrink-0">
+              <svg class="w-5 h-5 text-waze-cyan" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+              </svg>
+            </div>
+            <div>
+              <div class="text-waze-cyan font-semibold text-sm">Vyplnit formulář</div>
+              <div class="text-white/40 text-xs">Odeslat přímo přes náš formulář níže</div>
+            </div>
+            <svg class="w-4 h-4 text-waze-cyan/40 ml-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+            </svg>
+          </button>
+
+          <!-- Waze Forum -->
+          <a id="modal-forum-link" href="#" target="_blank" rel="noopener"
+             class="flex items-center gap-4 bg-white/5 hover:bg-white/10 border border-white/10 rounded-2xl px-5 py-4 transition-colors group">
+            <div class="w-10 h-10 rounded-xl bg-orange-500/20 flex items-center justify-center flex-shrink-0">
+              <svg class="w-5 h-5 text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l.586-.586z"/>
+              </svg>
+            </div>
+            <div>
+              <div class="text-white font-semibold text-sm group-hover:text-waze-cyan transition-colors">Napsat na Waze fóru</div>
+              <div class="text-white/40 text-xs">Přejít na CS/SK komunitní fórum</div>
+            </div>
+            <svg class="w-4 h-4 text-white/20 ml-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+
+      <!-- Form step (hidden initially) -->
+      <div id="modal-form" class="hidden px-7 pb-7">
+        <button onclick="showChoices()" class="flex items-center gap-1 text-white/40 hover:text-waze-cyan text-sm mb-4 transition-colors">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+          </svg>
+          Zpět
+        </button>
+        <iframe id="modal-iframe" src="about:blank" width="100%"
+                class="rounded-xl border border-white/10 bg-white w-full"
+                style="height: 520px;"
+                frameborder="0" marginheight="0" marginwidth="0">
+          Načítání formuláře…
+        </iframe>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const modals = {
+      uzavirka: {
+        title:    '🚧 Hlásit uzavírku',
+        facebook: 'https://www.facebook.com/groups/629403580825410',
+        discord:  'https://discord.gg/cUaGjJY',
+        forum:    'https://www.waze.com/discuss/c/editors/czech-republic-and-slovakia/cz-zadosti-o-upravu-cest-v-cr/4230',
+        form:     'https://docs.google.com/forms/d/1pRgGg4U97y1PBtByYdBIUf_fiRpayg7goxOdE6NGS9Y/viewform?embedded=true',
+      },
+      firma: {
+        title:    '🏢 Přidat firmu',
+        facebook: 'https://www.facebook.com/groups/629403580825410',
+        discord:  'https://discord.gg/cUaGjJY',
+        forum:    'https://www.waze.com/discuss/c/editors/czech-republic-and-slovakia/cz-zadosti-o-upravu-cest-v-cr/4230',
+        form:     'https://docs.google.com/forms/d/1YDWLHxvEnNY4tT76KdUHLCs5ZJSs6OOO4lOXpsn8xuQ/viewform?embedded=true',
+      },
+    };
+
+    function openModal(type) {
+      const cfg = modals[type];
+      document.getElementById('modal-title').textContent = cfg.title;
+      document.getElementById('modal-facebook-link').href = cfg.facebook;
+      document.getElementById('modal-discord-link').href = cfg.discord;
+      document.getElementById('modal-forum-link').href = cfg.forum;
+      document.getElementById('modal-iframe').dataset.src = cfg.form;
+      showChoices();
+      document.getElementById('action-modal').classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal() {
+      document.getElementById('action-modal').classList.add('hidden');
+      document.getElementById('modal-iframe').src = 'about:blank';
+      document.getElementById('modal-iframe').dataset.src = '';
+      document.body.style.overflow = '';
+    }
+
+    function showChoices() {
+      document.getElementById('modal-choices').classList.remove('hidden');
+      document.getElementById('modal-form').classList.add('hidden');
+      document.getElementById('modal-box').classList.remove('max-w-3xl');
+      document.getElementById('modal-box').classList.add('max-w-lg');
+    }
+
+    function showForm() {
+      const iframe = document.getElementById('modal-iframe');
+      iframe.src = iframe.dataset.src;
+      document.getElementById('modal-choices').classList.add('hidden');
+      document.getElementById('modal-form').classList.remove('hidden');
+      document.getElementById('modal-box').classList.remove('max-w-lg');
+      document.getElementById('modal-box').classList.add('max-w-3xl');
+    }
+
+    function openSpolekModal() {
+      document.getElementById('spolek-modal').classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeSpolekModal() {
+      document.getElementById('spolek-modal').classList.add('hidden');
+      document.body.style.overflow = '';
+    }
+
+    function openDownloadModal() {
+      document.getElementById('download-modal').classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeDownloadModal() {
+      document.getElementById('download-modal').classList.add('hidden');
+      document.body.style.overflow = '';
+    }
+
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') { closeModal(); closeDownloadModal(); closeSpolekModal(); }
+    });
+  </script>
+
+</body>
+</html>
