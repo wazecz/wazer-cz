@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>European Waze Communities — Wazer.cz</title>
+  <meta name="description" content="European Waze Communities. Find the volunteer Waze community in your country — websites, social media, wiki and forums." />
+  <meta property="og:title" content="Waze Europe" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            waze: {
+              cyan:   '#00CFFF',
+              blue:   '#1A1F71',
+              navy:   '#0D1240',
+              light:  '#E8F9FF',
+              gray:   '#F4F6F8',
+            }
+          },
+          fontFamily: {
+            sans: ['"Rubik"', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+          },
+        }
+      }
+    }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    html { scroll-behavior: smooth; }
+  </style>
+</head>
+<body class="font-sans text-gray-800 bg-waze-gray">
+
+  <!-- ===== NAVBAR ===== -->
+  <nav class="fixed top-0 left-0 right-0 z-50 bg-waze-navy/95 backdrop-blur-sm shadow-lg">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 flex items-center justify-between h-16">
+      <a href="index.html" class="flex items-center gap-2">
+        <span class="text-waze-cyan font-extrabold text-xl tracking-tight">Wazer<span class="text-white">.cz</span></span>
+      </a>
+      <a href="index.html" class="text-sm font-medium text-white/80 hover:text-waze-cyan transition-colors">← Česká komunita</a>
+    </div>
+  </nav>
+
+  <!-- ===== HERO ===== -->
+  <header class="bg-waze-navy pt-16 overflow-hidden relative">
+    <div class="absolute inset-0 overflow-hidden pointer-events-none">
+      <div class="absolute -top-32 -right-32 w-96 h-96 rounded-full bg-waze-cyan/10 blur-3xl"></div>
+      <div class="absolute bottom-0 -left-32 w-80 h-80 rounded-full bg-waze-blue/30 blur-3xl"></div>
+    </div>
+    <div class="relative max-w-6xl mx-auto px-4 sm:px-6 py-16 text-center">
+      <span class="inline-block bg-waze-cyan/10 border border-waze-cyan/30 text-waze-cyan text-xs font-semibold uppercase tracking-widest px-4 py-1.5 rounded-full mb-6">
+        Waze Europe
+      </span>
+      <h1 class="text-4xl sm:text-5xl font-extrabold text-white leading-tight mb-4">
+        European <span class="text-waze-cyan">Waze</span> Communities
+      </h1>
+      <p class="text-white/60 text-lg max-w-2xl mx-auto">
+        Find the volunteer Waze community in your country — websites, social media, wiki and forums.
+      </p>
+    </div>
+  </header>
+
+  <!-- ===== COMMUNITIES ===== -->
+  <main class="py-16">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6">
+      <div class="relative max-w-md mx-auto mb-10">
+        <input id="search" type="search" placeholder="Search country…" autocomplete="off"
+               class="w-full bg-white border border-gray-200 rounded-full px-5 py-3 text-sm focus:outline-none focus:border-waze-cyan focus:ring-2 focus:ring-waze-cyan/20" />
+      </div>
+      <div id="grid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4"></div>
+      <p id="empty" class="hidden text-center text-gray-400 py-10">No country found.</p>
+    </div>
+  </main>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="bg-waze-navy py-8">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-white/30">
+      <div class="flex flex-wrap gap-5 justify-center">
+        <a href="https://www.waze.com/editor" target="_blank" rel="noopener" class="hover:text-waze-cyan transition-colors">Waze Map Editor</a>
+        <a href="https://www.waze.com/discuss/" target="_blank" rel="noopener" class="hover:text-waze-cyan transition-colors">Community Forums</a>
+        <span>© <script>document.write(new Date().getFullYear())</script> <a href="index.html" class="hover:text-waze-cyan transition-colors">Waze ČR</a></span>
+      </div>
+      <span class="text-center sm:text-right">Maintained by users — not an official <a href="https://www.waze.com" target="_blank" rel="noopener" class="hover:text-waze-cyan transition-colors">Waze site</a>.</span>
+    </div>
+  </footer>
+
+  <script>
+    // Link types: web, facebook, x, stats, chat, wiki, forum, youtube
+    // flag = ISO 3166-1 alpha-2 code (flagcdn.com); links: [type, url]
+    const countries = [
+      { name: 'Albania', local: 'Shqipëri', flag: 'al', links: [
+        ['wiki', 'https://wazeopedia.waze.com/wiki/Albania'] ] },
+      { name: 'Andorra', flag: 'ad', links: [
+        ['forum', 'https://www.waze.com/forum/viewforum.php?f=1101'] ] },
+      { name: 'Austria', local: 'Österreich', flag: 'at', links: [
+        ['facebook', 'https://www.facebook.com/WazeAustria'],
+        ['wiki', 'https://wazeopedia.waze.com/wiki/Austria'],
+        ['forum', 'https://www.waze.com/forum/viewforum.php?f=107'] ] },
+      { name: 'Belarus', local: 'Беларусь', flag: 'by', links: [
+        ['facebook', 'https://www.facebook.com/WazeBy/'],
+        ['chat', 'http://wazebelarus.slack.com'],
+        ['forum', 'https://www.waze.com/forum/viewforum.php?f=893'] ] },
+      { name: 'Belgium', local: 'België/Belgique', flag: 'be', web: 'http://www.wazebelgium.be/', links: [
+        ['facebook', 'https://www.facebook.com/wazebelgium/'],
+        ['x', 'https://twitter.com/WazeBelgium'],
+        ['stats', 'http://www.wazebelgium.be/stat'],
+        ['chat', 'https://wazebenelux.slack.com/'],
+        ['wiki', 'https://wazeopedia.waze.com/wiki/Benelux'],
+        ['forum', 'https://www.waze.com/forum/viewforum.php?f=473'] ] },
+      { name: 'Bosnia and Herzegovina', local: 'Босна и Херцеговина', flag: 'ba', links: [
+        ['facebook', 'https://www.facebook.com/Waze.BiH'],
+        ['wiki', 'https://wiki.waze.com/wiki/BiH'],
+        ['forum', 'https://www.waze.com/forum/viewforum.php?f=806'] ] },
+      { name: 'Bulgaria', local: 'България', flag: 'bg', links: [
+        ['facebook', 'https://www.facebook.com/waze.bulgaria'],
+        ['wiki', 'https://wazeopedia.waze.com/wiki/Bulgaria'],
+        ['forum', 'https://www.waze.com/forum/viewforum.php?f=306'] ] },
+      { name: 'Croatia', local: 'Hrvatska', flag: 'hr', links: [
+        ['facebook', 'https://www.facebook.com/WazeHrvatska'],
+        ['wiki', 'https://wazeopedia.waze.com/wiki/Croatia'],
+        ['forum', 'https://www.waze.com/forum/viewforum.php?f=1318'] ] },
+      { name: 'Cyprus', local: 'Κύπρος', flag: 'cy', links: [
+        ['wiki', 'https://wazeopedia.waze.com/wiki/Commons/Cyprus'],
+        ['forum', 'https://www.waze.com/forum/viewforum.php?f=902'] ] },
+      { name: 'Czechia', local: 'Česko', flag: 'cz', web: 'index.html', links: [
+        ['facebook', 'https://www.facebook.com/WazeCZ'],
+        ['x', 'https://twitter.com/WazeCZ'],
+        ['chat', 'https://discord.gg/cUaGjJY'],
+        ['wiki', 'https://wazeopedia.waze.com/wiki/Commons/Czech'],
+        ['forum', 'https://www.waze.com/discuss/c/editors/czech-republic-and-slovakia/4229'],
+        ['youtube', 'https://www.youtube.com/c/WazerCZ'] ] },
+      { name: 'Denmark', local: 'Danmark', flag: 'dk', web: 'http://wazedanmark.dk/', links: [
+        ['facebook', 'https://www.facebook.com/wazedanmark'],
+        ['x', 'https://twitter.com/WazeDanmark'],
+        ['wiki', 'https://wazeopedia.waze.com/wiki/Denmark'],
+        ['forum', 'https://www.waze.com/forum/viewforum.php?f=121'] ] },
+      { name: 'Estonia', local: 'Eesti', flag: 'ee', links: [
+        ['facebook', 'https://www.facebook.com/WazeEstonia'],
+        ['wiki', 'https://wazeopedia.waze.com/wiki/Estonia'],
+        ['forum', 'https://www.waze.com/forum/viewforum.php?f=1347'] ] },
+      { name: 'Faroe Islands', flag: 'fo', links: [] },
+      { name: 'Finland', local: 'Suomi', flag: 'fi', links: [
+        ['facebook', 'https://www.facebook.com/WazeFinland'],
+        ['wiki', 'https://wazeopedia.waze.com/wiki/Finland'],
+        ['forum', 'https://www.waze.com/forum/viewforum.php?f=116'] ] },
+      { name: 'France', flag: 'fr', links: [
+        ['facebook', 'https://www.facebook.com/WazeFr'],
+        ['x', 'https://twitter.com/WazeFrance'],
+        ['wiki', 'https://wazeopedia.waze.com/wiki/France'],
+        ['forum', 'https://www.waze.com/forum/viewforum.php?f=34'] ] },
+      { name: 'Germany', local: 'Deutschland', flag: 'de', links: [
+        ['facebook', 'https://www.facebook.com/WazeGermany'],
+        ['x', 'https://twitter.com/WazeGermany'],
+        ['wiki', 'https://wazeopedia.waze.com/wiki/Germany'],
+        ['forum', 'https://www.waze.com/forum/viewforum.php?f=77'] ] },
+      { name: 'Gibraltar', flag: 'gi', links: [] },
+      { name: 'Greece', local: 'Ελλάς', flag: 'gr', links: [
+        ['facebook', 'https://www.facebook.com/WazeGreece/'],
+        ['wiki', 'https://wazeopedia.waze.com/wiki/Greece'],
+        ['forum', 'https://www.waze.com/forum/viewforum.php?f=147'] ] },
+      { name: 'Hungary', local: 'Magyarország', flag: 'hu', links: [
+        ['facebook', 'https://www.facebook.com/waze.hu'],
+        ['x', 'https://twitter.com/wazehu'],
+        ['wiki', 'https://wazeopedia.waze.com/wiki/Hungary'],
+        ['forum', 'https://www.waze.com/forum/viewforum.php?f=25'] ] },
+      { name: 'Iceland', local: 'Ísland', flag: 'is', links: [
+        ['forum', 'https://www.waze.com/forum/viewforum.php?f=308'] ] },
+      { name: 'Ireland', local: 'Éire', flag: 'ie', links: [
+        ['x', 'https://twitter.com/wazeireland'],
+        ['wiki', 'https://wazeopedia.waze.com/wiki/Ireland'],
+        ['forum', 'https://www.waze.com/forum/viewforum.php?f=119'] ] },
+      { name: 'Isle of Man', flag: 'im', links: [
+        ['forum', 'https://www.waze.com/forum/viewforum.php?f=189'] ] },
+      { name: 'Italy', local: 'Italia', flag: 'it', web: 'http://www.wazeitalia.it/home/', links: [
+        ['facebook', 'https://www.facebook.com/WazeEditorsItalia'],
+        ['x', 'https://twitter.com/waze_it'],
+        ['wiki', 'https://wazeopedia.waze.com/wiki/Italy'],
+        ['forum', 'https://www.waze.com/forum/viewforum.php?f=20'] ] },
+      { name: 'Kosovo', flag: 'xk', links: [
+        ['wiki', 'https://wazeopedia.waze.com/wiki/Commons/Kosovo'],
+        ['forum', 'https://www.waze.com/forum/viewforum.php?f=924'] ] },
+      { name: 'Latvia', local: 'Latvija', flag: 'lv', links: [
+        ['facebook', 'https://www.facebook.com/WazeLv/'],
+        ['x', 'https://twitter.com/waze_latvia'],
+        ['chat', 'https://www.hamsterpad.com/chat/waze-latvia'],
+        ['wiki', 'https://wazeopedia.waze.com/wiki/Latvia'],
+        ['forum', 'https://www.waze.com/forum/viewforum.php?f=151'] ] },
+      { name: 'Liechtenstein', flag: 'li', links: [] },
+      { name: 'Lithuania', local: 'Lietuva', flag: 'lt', links: [
+        ['facebook', 'https://www.facebook.com/WazeLv'],
+        ['wiki', 'https://wazeopedia.waze.com/wiki/Lithuania'],
+        ['forum', 'https://www.waze.com/forum/viewforum.php?f=1347'] ] },
+      { name: 'Luxembourg', local: 'Lëtzebuerg', flag: 'lu', links: [
+        ['facebook', 'https://www.facebook.com/wazeletzebuerg'],
+        ['x', 'https://twitter.com/WazeLetzebuerg'],
+        ['stats', 'http://www.wazebelgium.be/stat'],
+        ['chat', 'https://wazebenelux.slack.com/'],
+        ['wiki', 'https://wazeopedia.waze.com/wiki/Benelux'],
+        ['forum', 'https://www.waze.com/forum/viewforum.php?f=473'] ] },
+      { name: 'North Macedonia', local: 'Македонија', flag: 'mk', links: [
+        ['facebook', 'https://www.facebook.com/Waze.Makedonija'],
+        ['forum', 'https://www.waze.com/forum/viewforum.php?f=1216'] ] },
+      { name: 'Malta', flag: 'mt', links: [
+        ['facebook', 'https://www.facebook.com/Waze-Malta-and-Gozo-group-125300527533802/'],
+        ['forum', 'https://www.waze.com/forum/viewforum.php?f=1402'] ] },
+      { name: 'Moldova', flag: 'md', links: [
+        ['facebook', 'https://www.facebook.com/WazeMoldova/'],
+        ['forum', 'https://www.waze.com/forum/viewforum.php?f=1337'] ] },
+      { name: 'Monaco', flag: 'mc', links: [] },
+      { name: 'Montenegro', local: 'Црна Гора', flag: 'me', links: [
+        ['forum', 'https://www.waze.com/forum/viewforum.php?f=1641'] ] },
+      { name: 'Netherlands', local: 'Nederland', flag: 'nl', links: [
+        ['facebook', 'https://www.facebook.com/wazenederland'],
+        ['x', 'https://twitter.com/WazeNederland'],
+        ['stats', 'http://www.wazebelgium.be/stat'],
+        ['chat', 'https://wazebenelux.slack.com/'],
+        ['wiki', 'https://wazeopedia.waze.com/wiki/Benelux'],
+        ['forum', 'https://www.waze.com/forum/viewforum.php?f=473'] ] },
+      { name: 'Norway', local: 'Norge', flag: 'no', links: [
+        ['facebook', 'https://www.facebook.com/WazeNorge'],
+        ['wiki', 'https://wazeopedia.waze.com/wiki/Norway'],
+        ['forum', 'https://www.waze.com/forum/viewforum.php?f=54'] ] },
+      { name: 'Poland', local: 'Polska', flag: 'pl', web: 'http://wazepolska.pl/', links: [
+        ['facebook', 'https://www.facebook.com/WazePolska'],
+        ['x', 'https://twitter.com/wazepolska'],
+        ['stats', 'http://statystyki.mouse.one.pl/index.php'],
+        ['wiki', 'https://wazeopedia.waze.com/wiki/Poland'],
+        ['forum', 'https://www.waze.com/forum/viewforum.php?f=73'],
+        ['youtube', 'https://www.youtube.com/channel/UCahZMqvaC3cLSn5f8UT_3Fg'] ] },
+      { name: 'Portugal', flag: 'pt', links: [
+        ['facebook', 'https://www.facebook.com/WazePortugal'],
+        ['wiki', 'https://wazeopedia.waze.com/wiki/Portugal'],
+        ['forum', 'https://www.waze.com/forum/viewforum.php?f=59'] ] },
+      { name: 'Romania', local: 'România', flag: 'ro', web: 'http://www.waze.ro/', links: [
+        ['facebook', 'https://www.facebook.com/WazeRomania'],
+        ['wiki', 'https://wazeopedia.waze.com/wiki/Romania'],
+        ['forum', 'https://www.waze.com/forum/viewforum.php?f=120'] ] },
+      { name: 'Russia', local: 'Россия', flag: 'ru', web: 'https://waze.su/', links: [
+        ['facebook', 'https://www.facebook.com/groups/Waze.RU/'],
+        ['stats', 'http://stats.waze.su/'],
+        ['chat', 'http://wazerussia.tk/'],
+        ['wiki', 'https://wazeopedia.waze.com/wiki/Russia'],
+        ['forum', 'https://www.waze.com/forum/viewforum.php?f=23'] ] },
+      { name: 'San Marino', flag: 'sm', links: [] },
+      { name: 'Serbia', local: 'Србија', flag: 'rs', links: [
+        ['facebook', 'https://www.facebook.com/WazeSrbija'],
+        ['wiki', 'https://wazeopedia.waze.com/wiki/Serbia'],
+        ['forum', 'https://www.waze.com/forum/viewforum.php?f=117'] ] },
+      { name: 'Slovakia', local: 'Slovensko', flag: 'sk', web: 'http://www.wazer.sk/', links: [
+        ['facebook', 'https://www.facebook.com/waze.sk'],
+        ['wiki', 'https://wazeopedia.waze.com/wiki/Slovakia/Slovakia'],
+        ['forum', 'https://www.waze.com/discuss/c/editors/czech-republic-and-slovakia/4229'] ] },
+      { name: 'Slovenia', local: 'Slovenija', flag: 'si', links: [
+        ['facebook', 'https://www.facebook.com/WazeSlovenija'],
+        ['wiki', 'https://wazeopedia.waze.com/wiki/Slovenia'],
+        ['forum', 'https://www.waze.com/forum/viewforum.php?f=169'] ] },
+      { name: 'Spain', local: 'España', flag: 'es', links: [
+        ['facebook', 'https://www.facebook.com/WazeEspana/'],
+        ['x', 'https://twitter.com/waze_espana'],
+        ['wiki', 'https://wazeopedia.waze.com/wiki/Spain'],
+        ['forum', 'https://www.waze.com/forum/viewforum.php?f=67'] ] },
+      { name: 'Sweden', local: 'Sverige', flag: 'se', links: [
+        ['wiki', 'https://wazeopedia.waze.com/wiki/Sweden'],
+        ['forum', 'https://www.waze.com/forum/viewforum.php?f=33'] ] },
+      { name: 'Switzerland', local: 'Schweiz/Suisse/Svizzera', flag: 'ch', web: 'http://www.waze-switzerland.ch/', links: [
+        ['facebook', 'https://www.facebook.com/WazeSwitzerland'],
+        ['x', 'https://twitter.com/WazeRomandie'],
+        ['wiki', 'https://wazeopedia.waze.com/wiki/Switzerland'],
+        ['forum', 'https://www.waze.com/forum/viewforum.php?f=63'] ] },
+      { name: 'Ukraine', local: 'Україна', flag: 'ua', links: [
+        ['facebook', 'https://www.facebook.com/groups/waze.ua/'],
+        ['wiki', 'https://wazeopedia.waze.com/wiki/Ukraine'],
+        ['forum', 'https://www.waze.com/forum/viewforum.php?f=170'] ] },
+      { name: 'United Kingdom', flag: 'gb', links: [
+        ['facebook', 'https://www.facebook.com/WazeUK'],
+        ['x', 'https://twitter.com/WazeUK'],
+        ['wiki', 'https://wazeopedia.waze.com/wiki/UnitedKingdom'],
+        ['forum', 'https://www.waze.com/forum/viewforum.php?f=55'] ] },
+      { name: 'Vatican City', local: 'Città del Vaticano', flag: 'va', links: [] },
+    ];
+
+    const linkTypes = {
+      facebook: { label: 'Facebook', cls: 'bg-[#1877F2]/10 text-[#1877F2] hover:bg-[#1877F2]/20' },
+      x:        { label: 'X',        cls: 'bg-gray-900/5 text-gray-800 hover:bg-gray-900/10' },
+      chat:     { label: 'Chat',     cls: 'bg-[#5865F2]/10 text-[#5865F2] hover:bg-[#5865F2]/20' },
+      stats:    { label: 'Stats',    cls: 'bg-emerald-500/10 text-emerald-700 hover:bg-emerald-500/20' },
+      wiki:     { label: 'Wiki',     cls: 'bg-waze-cyan/15 text-waze-blue hover:bg-waze-cyan/25' },
+      forum:    { label: 'Forum',    cls: 'bg-orange-500/10 text-orange-600 hover:bg-orange-500/20' },
+      youtube:  { label: 'YouTube',  cls: 'bg-red-500/10 text-red-600 hover:bg-red-500/20' },
+    };
+
+    const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+
+    function card(c) {
+      const external = c.web && /^https?:/.test(c.web);
+      const target = external ? ' target="_blank" rel="noopener"' : '';
+      const title = c.web
+        ? `<a href="${esc(c.web)}"${target} class="font-bold text-waze-navy hover:text-waze-cyan transition-colors">${esc(c.name)}</a>`
+        : `<span class="font-bold text-waze-navy">${esc(c.name)}</span>`;
+      const webPill = c.web
+        ? `<a href="${esc(c.web)}"${target} class="text-xs font-semibold px-3 py-1.5 rounded-full bg-waze-navy text-white hover:bg-waze-blue transition-colors">Website</a>`
+        : '';
+      const pills = c.links.map(([type, url]) => {
+        const t = linkTypes[type];
+        return `<a href="${esc(url)}" target="_blank" rel="noopener" class="text-xs font-semibold px-3 py-1.5 rounded-full transition-colors ${t.cls}">${t.label}</a>`;
+      }).join('');
+      const body = (webPill || pills)
+        ? `<div class="flex flex-wrap gap-2">${webPill}${pills}</div>`
+        : `<div class="text-xs text-gray-300 italic">No community links yet</div>`;
+      const dim = (c.web || c.links.length) ? '' : ' opacity-60';
+      return `
+        <div class="bg-white rounded-2xl p-5 shadow-sm border border-gray-100 flex flex-col gap-4${dim}" data-search="${esc((c.name + ' ' + (c.local || '')).toLowerCase())}">
+          <div class="flex items-center gap-3">
+            <img src="https://flagcdn.com/w80/${c.flag}.png" alt="" width="40" height="30" loading="lazy"
+                 class="w-10 h-[30px] object-cover rounded shadow-sm border border-gray-100 flex-shrink-0" />
+            <div class="min-w-0">
+              <div class="leading-tight">${title}</div>
+              ${c.local ? `<div class="text-gray-400 text-xs italic truncate">${esc(c.local)}</div>` : ''}
+            </div>
+          </div>
+          ${body}
+        </div>`;
+    }
+
+    const grid = document.getElementById('grid');
+    grid.innerHTML = countries.map(card).join('');
+
+    document.getElementById('search').addEventListener('input', e => {
+      const q = e.target.value.trim().toLowerCase();
+      let visible = 0;
+      grid.querySelectorAll('[data-search]').forEach(el => {
+        const show = !q || el.dataset.search.includes(q);
+        el.classList.toggle('hidden', !show);
+        if (show) visible++;
+      });
+      document.getElementById('empty').classList.toggle('hidden', visible > 0);
+    });
+  </script>
+
+</body>
+</html>
