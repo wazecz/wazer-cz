@@ -14,6 +14,9 @@ Edit this file to change content, then ask Claude to regenerate `index.html`.
   - Blue (mid): `#1A1F71`
   - Light gray (section bg): `#F4F6F8`
 - **Layout:** Single scrollable page, sticky navbar, mobile responsive
+- **SEO / head:** canonical `https://www.wazer.cz/`, favicon `/images/waze-icon.svg`, apple-touch-icon `/images/apple-touch-icon.png` (180×180, Waze icon on cyan), theme-color `#0D1240`, Open Graph (og:type, og:url, og:site_name "Wazer.cz", og:title "Wazer.cz — Česká komunita Waze", og:description "Dobrovolná komunita, která tvoří a udržuje mapy Waze v České republice.", og:locale cs_CZ, og:image `/images/og-image.png` 1200×630 — navy, badge "Dobrovolná komunita", "Česká komunita Waze", wazer.cz, Waze icon), twitter:card summary_large_image
+- **Robots & sitemap:** `robots.txt` (allow all, points to sitemap) and `sitemap.xml` (index + eu.html) in the root — add new pages to the sitemap
+- **Validity:** must pass https://validator.w3.org/nu/ without errors (e.g. no `<div>` inside `<button>` — use `<span>`)
 - **Hover:** lift/shadow hover effect only on clickable cards (links, buttons) — never on static cards
 - **Meta description:** Dobrovolná komunita, která tvoří a udržuje mapy Waze v České republice a poskytuje českou podporu uživatelům.
 
@@ -42,6 +45,7 @@ Links (anchor scroll):
   - 📱 Stáhnout aplikaci → opens download modal (Google Play / App Store)
   - ✏️ Uprav mapu → anchor scroll to Section 4 (Zapojit se)
 - **Action modal content (same structure for Hlásit uzavírku and Přidat firmu):**
+  - Modal title (default, replaced by JS): Kontaktujte nás
   - Intro message: "Úprava mapy je jednoduchá. Máme ale spoustu pravidel — pokud si na to netroufáte, dejte nám raději vědět přes jeden z odkazů níže." — "Úprava mapy" is a link that closes the modal and scrolls to Section 4
   - Option 1: Napsat na Facebooku (Přejít do naší Facebook skupiny) → `https://www.facebook.com/groups/629403580825410`
   - Option 2: Napsat na Discordu → `https://discord.gg/cUaGjJY`
@@ -167,7 +171,10 @@ Links (anchor scroll):
 ## Footer
 
 - **Text:** © [auto year] Wazer.cz — dobrovolná komunita Waze ČR
-- **Links:**
+- **Left links (right after the text, new tab):**
+  - Sbírka listin → `https://or.justice.cz/ias/ui/vypis-sl-firma?subjektId=1324341`
+  - Stanovy spolku → `https://or.justice.cz/ias/ui/vypis-sl-detail?dokument=91891542&subjektId=1324341&spis=1496121`
+- **Right links:**
   - Komunity v Evropě → `eu.html`
   - Waze.com → `https://www.waze.com`
 
@@ -178,6 +185,7 @@ Links (anchor scroll):
 Remake of the old `https://wazer.cz/eu/` page in the same design as `index.html`. English (international audience).
 
 - **Title:** European Waze Communities — Wazer.cz
+- **Head:** canonical `https://www.wazer.cz/eu.html`, same favicon / apple-touch-icon / theme-color / og:image as index, Open Graph (title "Waze Europe" + description, og:locale en_GB), twitter:card summary_large_image
 - **Navbar:** Wazer.cz logo → `index.html`, link "← Česká komunita" → `index.html`
 - **Hero:** badge "Waze Europe", headline "European Waze Communities", subtext "Find the volunteer Waze community in your country — websites, social media, wiki and forums."
 - **Search box:** "Search country…" — filters cards by English or local name; empty state "No country found."

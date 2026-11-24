@@ -5,6 +5,21 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Wazer.cz — Česká komunita Waze</title>
   <meta name="description" content="Dobrovolná komunita, která tvoří a udržuje mapy Waze v České republice a poskytuje českou podporu uživatelům." />
+  <link rel="canonical" href="https://www.wazer.cz/" />
+  <link rel="icon" type="image/svg+xml" href="/images/waze-icon.svg" />
+  <link rel="apple-touch-icon" href="/images/apple-touch-icon.png" />
+  <meta name="theme-color" content="#0D1240" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://www.wazer.cz/" />
+  <meta property="og:title" content="Wazer.cz — Česká komunita Waze" />
+  <meta property="og:description" content="Dobrovolná komunita, která tvoří a udržuje mapy Waze v České republice." />
+  <meta property="og:locale" content="cs_CZ" />
+  <meta property="og:site_name" content="Wazer.cz" />
+  <meta property="og:image" content="https://www.wazer.cz/images/og-image.png" />
+  <meta property="og:image:alt" content="Česká komunita Waze — wazer.cz" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
@@ -362,15 +377,15 @@
           <!-- Association button -->
           <button onclick="openSpolekModal()"
                   class="flex items-center gap-4 bg-white rounded-2xl p-5 border border-gray-100 card-hover group w-full text-left cursor-pointer">
-            <div class="w-12 h-12 rounded-full bg-waze-cyan/15 flex items-center justify-center flex-shrink-0">
+            <span class="w-12 h-12 rounded-full bg-waze-cyan/15 flex items-center justify-center flex-shrink-0">
               <svg class="w-5 h-5 text-waze-cyan" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/>
               </svg>
-            </div>
-            <div class="flex-1">
-              <div class="font-bold text-waze-navy group-hover:text-waze-cyan transition-colors">Informace o spolku</div>
-              <div class="text-gray-400 text-sm">Výbor, název, IČO, sídlo, účet</div>
-            </div>
+            </span>
+            <span class="flex-1">
+              <span class="block font-bold text-waze-navy group-hover:text-waze-cyan transition-colors">Informace o spolku</span>
+              <span class="block text-gray-400 text-sm">Výbor, název, IČO, sídlo, účet</span>
+            </span>
             <svg class="w-4 h-4 text-gray-300 group-hover:text-waze-cyan transition-colors flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
             </svg>
@@ -446,9 +461,11 @@
   <!-- ===== FOOTER ===== -->
   <footer class="bg-waze-navy py-8">
     <div class="max-w-6xl mx-auto px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-4">
-      <span class="text-white/30 text-sm">
-        © <script>document.write(new Date().getFullYear())</script> Wazer.cz — dobrovolná komunita Waze ČR
-      </span>
+      <div class="flex flex-wrap justify-center sm:justify-start gap-x-5 gap-y-2 text-sm text-white/30">
+        <span>© <script>document.write(new Date().getFullYear())</script> Wazer.cz — dobrovolná komunita Waze ČR</span>
+        <a href="https://or.justice.cz/ias/ui/vypis-sl-firma?subjektId=1324341" target="_blank" rel="noopener" class="hover:text-waze-cyan transition-colors">Sbírka listin</a>
+        <a href="https://or.justice.cz/ias/ui/vypis-sl-detail?dokument=91891542&amp;subjektId=1324341&amp;spis=1496121" target="_blank" rel="noopener" class="hover:text-waze-cyan transition-colors">Stanovy spolku</a>
+      </div>
       <div class="flex gap-5 text-sm text-white/30">
         <a href="eu.html" class="hover:text-waze-cyan transition-colors">Komunity v Evropě</a>
         <a href="https://www.waze.com" target="_blank" rel="noopener" class="hover:text-waze-cyan transition-colors">Waze.com</a>
@@ -584,7 +601,7 @@
     <div id="modal-box" class="relative bg-waze-navy border border-white/10 rounded-3xl w-full max-w-lg shadow-2xl overflow-hidden transition-all duration-300">
       <!-- Header -->
       <div class="flex items-center justify-between px-7 pt-7 pb-4">
-        <h2 id="modal-title" class="text-white font-extrabold text-xl"></h2>
+        <h2 id="modal-title" class="text-white font-extrabold text-xl">Kontaktujte nás</h2>
         <button onclick="closeModal()" class="text-white/40 hover:text-white transition-colors p-1">
           <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
@@ -637,15 +654,15 @@
 
           <!-- Form -->
           <button onclick="showForm()" class="flex items-center gap-4 bg-waze-cyan/10 hover:bg-waze-cyan/20 border border-waze-cyan/20 rounded-2xl px-5 py-4 transition-colors group text-left w-full">
-            <div class="w-10 h-10 rounded-xl bg-waze-cyan/20 flex items-center justify-center flex-shrink-0">
+            <span class="w-10 h-10 rounded-xl bg-waze-cyan/20 flex items-center justify-center flex-shrink-0">
               <svg class="w-5 h-5 text-waze-cyan" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
               </svg>
-            </div>
-            <div>
-              <div class="text-waze-cyan font-semibold text-sm">Vyplnit formulář</div>
-              <div class="text-white/40 text-xs">Odeslat přímo přes náš formulář níže</div>
-            </div>
+            </span>
+            <span class="block">
+              <span class="block text-waze-cyan font-semibold text-sm">Vyplnit formulář</span>
+              <span class="block text-white/40 text-xs">Odeslat přímo přes náš formulář níže</span>
+            </span>
             <svg class="w-4 h-4 text-waze-cyan/40 ml-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
             </svg>
@@ -678,12 +695,9 @@
           </svg>
           Zpět
         </button>
-        <iframe id="modal-iframe" src="about:blank" width="100%"
+        <iframe id="modal-iframe" src="about:blank" title="Formulář"
                 class="rounded-xl border border-white/10 bg-white w-full"
-                style="height: 520px;"
-                frameborder="0" marginheight="0" marginwidth="0">
-          Načítání formuláře…
-        </iframe>
+                style="height: 520px;"></iframe>
       </div>
     </div>
   </div>
