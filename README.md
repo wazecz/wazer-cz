@@ -170,6 +170,7 @@ Links (anchor scroll):
 
 ## Footer
 
+- **About row (top of footer, separated by a thin line, spolek name in bold):** Spolek editorů Waze Česká republika, z.s. je dobrovolný neziskový spolek, který podporuje, rozvíjí a zkvalitňuje mapový obsah Waze pro Českou republiku, mimo jiné ve spolupráci se správními orgány a správci pozemních komunikací.
 - **Text:** © [auto year] Wazer.cz — dobrovolná komunita Waze ČR
 - **Left links (right after the text, new tab):**
   - Sbírka listin → `https://or.justice.cz/ias/ui/vypis-sl-firma?subjektId=1324341`
